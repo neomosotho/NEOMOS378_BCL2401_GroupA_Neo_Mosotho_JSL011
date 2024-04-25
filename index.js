@@ -17,10 +17,51 @@ function initializeData() {
     console.log('Data already exists in localStorage');
   }
 }
+initializeData();
 
 // TASK: Get elements from the DOM
 const elements = {
+  // Navigation Sidebar elements
+ sideBarDiv : document.getElementById('side-bar-div'),
+ logo = document.getElementById('logo'),
+ darkThemeIcon : document.getElementById('icon-dark'),
+ lightThemeIcon : document.getElementById('icon-light'),
+ switchCheckbox : document.getElementById('switch'),
+ switchCheckboxTheme : document.getElementById('label-checkbox-theme'),
+ hideSidebarBtn : document.getElementById('hide-side-bar-btn'),
+ showSidebarBtn : document.getElementById('show-side-bar-btn'),
 
+// Header elements
+ headerBoardName : document.getElementById('header-board-name'),
+ dropdownBtn : document.getElementById('dropdownBtn'),
+ chevronIcon : document.getElementById('dropDownIcon'),
+ addNewTaskBtn : document.getElementById('add-new-task-btn'),
+ editBoardBtn : document.getElementById('edit-board-btn'),
+ deleteBoardBtn : document.getElementById('deleteBoardBtn'),
+
+ // Task Columns elements
+columnDivs : document.querySelectorAll('.column-div'),
+
+ // New Task Modal elements
+ newTaskModal : document.getElementById('new-task-modal-window'),
+ modalTitleInput : document.getElementById('title-input'),
+ modalDescInput : document.getElementById('desc-input'),
+ modalSelectStatus : document.getElementById('select-status'),
+ createTaskBtn : document.getElementById('create-task-btn'),
+ cancelAddTaskBtn : document.getElementById('cancel-add-task-btn'),
+
+ // Edit Task Modal elements
+ editTaskModal : document.querySelector('.edit-task-modal-window'),
+ editTaskForm : document.getElementById('edit-task-form'),
+ editTaskTitleInput : document.getElementById('edit-task-title-input'),
+ editTaskDescInput = document.getElementById('edit-task-desc-input'),
+ editSelectStatus : document.getElementById('edit-select-status'),
+ saveTaskChangesBtn : document.getElementById('save-task-changes-btn'),
+ cancelEditBtn : document.getElementById('cancel-edit-btn'),
+ deleteTaskBtn : document.getElementById('delete-task-btn'),
+
+ // Filter Div element
+ filterDiv : document.getElementById('filterDiv'),
 }
 
 let activeBoard = ""
