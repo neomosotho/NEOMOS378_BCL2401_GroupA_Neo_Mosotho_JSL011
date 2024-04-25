@@ -22,37 +22,6 @@ As a newly hired developer at Agile Board, a fictional company specializing in i
 
 ![alt text](assets/JSL11_solution.gif)
 
-Your journey through this project will involve several key activities:
-
-1. **Exploring the Starter Code**: Begin by familiarizing yourself with the UI and JS functionality we've provided. This will give you a solid understanding of the project's current state and what needs to be done.
-2. **Completing User Stories**: Dive into the user stories, which are your roadmap to completing the project. Each story is a feature or functionality that your app needs to support. Your goal is to write the JS code necessary to bring these stories to life.
-3. **Testing and Debugging**: As you implement each feature, test your app to ensure it works as expected. Debug any issues that arise to ensure a smooth user experience.
-4. **Reflecting on Your Work**: Once you've completed the user stories, take a step back and review your app. Consider the challenges you faced, what you learned, and how you might improve the app further.
-
-This project is designed to be both challenging and rewarding, providing you with hands-on experience in web development. By the end, you'll have a functional Kanban Task Management App that you can showcase in your portfolio. Ready to get started? Let's dive in!
-
-## What You Need to Do:
-
-To complete this challenge, follow these steps:
-
-1. Clone the provided Starter Code Repository to your local development environment: [Starter Code Repository](https://github.com/CodeSpace-Academy/Final_Project_StudentNo_Classcode_Group_Name-Surname_JSL11).
-2. Open the cloned project in your code editor.
-3. Code your solution to the user stories.
-4. Commit your changes to your local Git repository with meaningful commit messages.
-5. Push your local Git repository to your GitHub account.
-6. Verify that the changes have been successfully pushed to your GitHub repository.
-
-🚨 Make sure that you clear the localStorage as you are building your project. This will help with checking that the tasks are loading correctly. 
-
-![alt text](assets/clear-localStorage.gif)
-
-
-
-## What You Need to Include:
-
-1. Ensure that your code includes the necessary modifications to meet the challenge requirements.
-2. Your GitHub repository should contain the updated code files.
-
 # Agile Board Project Feature List
 
 In this Agile Board Project Feature List, you're introduced to a comprehensive suite of functionalities designed to enrich your Kanban Task Management App. 
@@ -106,3 +75,13 @@ As you embark on implementing these features, remember the value of tackling the
 - **Saving New Tasks in localStorage**: As a user, I want my newly created tasks to be saved in localStorage so that my tasks persist even when I close or refresh the browser.
 - **Reflecting Task Updates in localStorage**: As a user, I expect tasks that I update to have their changes reflected in localStorage so that any modifications are not lost.
 - **Removing Deleted Tasks from localStorage**: As a user, I want tasks that I delete to be removed from localStorage so that my task list remains accurate and up-to-date.
+
+## Loom Video Presentation link:
+ https://www.loom.com/share/1d6c79ae5e944291b882056592e41d71?sid=8c68a038-8355-4610-960e-a8ea29252932
+
+## Feedback:
+This project was very challenging, I personally had no idea what I was doing in the beginning. As time went on though, I slowly understood what was required of me. 
+
+## Challenges:
+I had a lot of challenges in this project but I got to understand them the more I did my research and the asked for help. I had a lot of errors and some of the features were not functioning they way they were supposed to. Some of them are still not functioning the way they're supposed to due to not having enough time to complete this project. I am still working on the project in order to find my mistakes and make sure the whole code functions well.
+
