@@ -1,5 +1,5 @@
 // TASK: import helper functions from  utils
-import { getTasks } from './utils/taskFunctions.js';
+import { getTasks, createNewTask } from './utils/taskFunctions.js';
 
 // TASK: import initialData
 import { initialData } from './initialData.js';
@@ -15,12 +15,9 @@ function initializeData() {
   if (!localStorage.getItem('tasks')) {
     console.log('Setting initial data in localStorage');
     localStorage.setItem('tasks', JSON.stringify(initialData));
-    localStorage.setItem('showSideBar', 'true');
-  } else {
-    console.log('Data already exists in localStorage');
   }
-  
-  console.log('Data initialization completed');
+    localStorage.setItem('showSideBar', 'true');
+    console.log('Data initialization completed');
 }
 
 
@@ -49,18 +46,18 @@ columnDivs : document.querySelectorAll('.column-div'),
 
  // New Task Modal elements
  modalWindow : document.getElementById('new-task-modal-window'),
-//  modalTitleInput : document.getElementById('title-input'),
-//  modalDescInput : document.getElementById('desc-input'),
-//  modalSelectStatus : document.getElementById('select-status'),
+ modalTitleInput : document.getElementById('title-input'),
+ modalDescInput : document.getElementById('desc-input'),
+ modalSelectStatus : document.getElementById('select-status'),
  createNewTaskBtn : document.getElementById('create-task-btn'),
-//  cancelAddTaskBtn : document.getElementById('cancel-add-task-btn'),
+ cancelAddTaskBtn : document.getElementById('cancel-add-task-btn'),
 
  // Edit Task Modal elements
  editTaskModal : document.querySelector('.edit-task-modal-window'),
 //  editTaskForm : document.getElementById('edit-task-form'),
-//  editTaskTitleInput : document.getElementById('edit-task-title-input'),
-//  editTaskDescInput : document.getElementById('edit-task-desc-input'),
-//  editSelectStatus : document.getElementById('edit-select-status'),
+ editTaskTitleInput : document.getElementById('edit-task-title-input'),
+ editTaskDescInput : document.getElementById('edit-task-desc-input'),
+ editSelectStatus : document.getElementById('edit-select-status'),
  saveTaskChangesBtn : document.getElementById('save-task-changes-btn'),
  cancelEditBtn : document.getElementById('cancel-edit-btn'),
  deleteTaskBtn : document.getElementById('delete-task-btn'),
@@ -77,14 +74,13 @@ function fetchAndDisplayBoardsAndTasks() {
   const tasks = getTasks();
   const boards = [...new Set(tasks.map(task => task.board).filter(Boolean))];
   displayBoards(boards);
-  if (boards.length > 0) {
-    const localStorageBoard = JSON.parse(localStorage.getItem("activeBoard"))
-    activeBoard = localStorageBoard ? localStorageBoard : boards[0]; //Adding a colon  
-    elements.headerBoardName.textContent = activeBoard
-    styleActiveBoard(activeBoard)
-    refreshTasksUI();
+  const localStorageBoard = JSON.parse(localStorage.getItem("activeBoard"))
+  activeBoard = localStorageBoard || boards[0]; //Adding an operator  
+  elements.headerBoardName.textContent = activeBoard
+  styleActiveBoard(activeBoard)
+  refreshTasksUI();
   }
-}
+
 
 // Creates different boards in the DOM
 // TASK: Fix Bugs
@@ -105,7 +101,6 @@ function displayBoards(boards) {
     boardsContainer.appendChild(boardElement);
   });
   
-
 }
 
 const colTitles = {
@@ -198,7 +193,7 @@ function addTaskToUI(task) {
 function setupEventListeners() {
   // Cancel editing task event listener
   const cancelEditBtn = document.getElementById('cancel-edit-btn');
-  cancelEditBtn.addEventListener('click',() => {toggleModal(false, elements.newTaskModal)}); //Adding eventListener and fixing click function
+  cancelEditBtn.addEventListener('click', () => {toggleModal(false, elements.newTaskModal)}); //Adding eventListener and fixing click function
 
   // Cancel adding new task event listener
   const cancelAddTaskBtn = document.getElementById('cancel-add-task-btn');
@@ -255,11 +250,13 @@ function addTask(event) {
 
     const newTask = createNewTask(task);
     if (newTask) {
-      addTaskToUI(newTask);
-      toggleModal(false);
-      elements.filterDiv.style.display = 'none'; // Also hide the filter overlay
-      event.target.reset();
-      refreshTasksUI();
+        addTaskToUI(newTask);
+        toggleModal(false);
+        document.getElementById('filterDiv').style.display = 'none';
+
+        document.getElementById('new-task-modal-window').reset();
+
+        refreshTasksUI();
     }
 }
 
@@ -306,15 +303,15 @@ function openEditTaskModal(task) {
   const saveBtn = document.getElementById('save-task-changes-btn');
 
   // Call saveTaskChanges upon click of Save Changes button
-  saveBtn.addEventListener('click',() => {
+  saveBtn.addEventListener('click', () => {
     saveTaskChanges(task.id);
-    toggleModal(false.elements.editTaskModal)
+    toggleModal(false, elements.editTaskModal)
   })
 
   // Delete task using a helper function and close the task modal
   deleteBtn.addEventListener('click',() => {
     deleteTask(task.id);
-    toggleModal(false.elements.editTaskModal)
+    toggleModal(false, elements.editTaskModal)
   })
   
 
@@ -336,20 +333,7 @@ function saveTaskChanges(taskId) {
   };
 
   // Update task using a helper function
-  function updateTask(taskId, updatedTask) {
-    
-    const taskElement = document.querySelector(`[data-task-id="${taskId}"]`); 
-
-    if (taskElement) {
-        
-        taskElement.querySelector('.task-title-input').value = updatedTask.title;
-        taskElement.querySelector('.task-description-input').value = updatedTask.description;
-        taskElement.querySelector('#edit-select-status').value = updatedTask.status;
-
-    } else {
-        console.error(`Task with ID ${taskId} not found`);
-    }
-}
+  updateTask(taskId, updatedTask); 
 
   // Close the modal and refresh the UI to reflect the changes
   toggleModal(false, document.querySelector('edit-task-modal-window'))
@@ -358,9 +342,8 @@ function saveTaskChanges(taskId) {
 
 /*************************************************************************************************************************************************/
 
-document.addEventListener('DOMContentLoaded', function() {
-  init(); // init is called after the DOM is fully loaded
-});
+document.addEventListener('DOMContentLoaded', init); // init is called after the DOM is fully loaded
+
 
 function init() {
   setupEventListeners();
