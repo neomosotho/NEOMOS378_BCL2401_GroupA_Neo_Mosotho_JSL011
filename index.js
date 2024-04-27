@@ -181,9 +181,13 @@ function addTaskToUI(task) {
   }
 
   const taskElement = document.createElement('div');
-  taskElement.className = 'task-div';
+  taskElement.classList.add('task-div');
   taskElement.textContent = task.title; // Modify as needed
   taskElement.setAttribute('data-task-id', task.id);
+
+  taskElement.addEventListener('click', () => { 
+    openEditTaskModal(task); 
+  });
   
   tasksContainer.appendChild(taskElement); 
 }
@@ -222,8 +226,21 @@ function setupEventListeners() {
     elements.filterDiv.style.display = 'block'; // Also show the filter overlay
   });
   // Add new task form submission event listener
-  elements.modalWindow.addEventListener('submit', addTask)
-  };
+  elements.modalWindow.addEventListener('submit', addTask);
+
+  // submitting new task form eventListener
+  elements.modalWindow.addEventListener('submit', addTask);
+  
+  elements.columnDivs.forEach(column => {
+    column.addEventListener('click', event => {
+      if (event.target.classList.contains('task-div')) {
+        const taskId = event.target.getAttribute('data-task-id');
+        const task = getTaskById(taskId); 
+        openEditTaskModal(task);
+      }
+    });
+  });
+};
 
 
 // Toggles tasks modal
@@ -243,18 +260,18 @@ function addTask(event) {
 
   //Assign user input to the task object
     const task = {
-      title: document.getElementById('title-input').value,
-      description: document.getElementById('desc-input').value,
-      status: document.getElementById('select-status').value
+      title: elements.modalTitleInput.value,
+      description: elements.modalDescInput.value,
+      status: elements.modalSelectStatus.value
     };
 
     const newTask = createNewTask(task);
     if (newTask) {
         addTaskToUI(newTask);
-        toggleModal(false);
-        document.getElementById('filterDiv').style.display = 'none';
+        toggleModal(false, elements.modalWindow);
+        elements.filterDiv.style.display = 'none';
 
-        document.getElementById('new-task-modal-window').reset();
+        elements.modalWindow.reset();
 
         refreshTasksUI();
     }
@@ -284,23 +301,13 @@ function toggleTheme() {
 
 function openEditTaskModal(task) {
   // Set task details in modal inputs
-  function setTaskDetailsInModal(task) {
-    // Set task title
-    const titleInput = document.getElementById('edit-task-title-input');
-    titleInput.value = task.title;
-
-    // Set task description
-    const descInput = document.getElementById('edit-task-desc-input');
-    descInput.value = task.description;
-
-    // Set task status
-    const statusSelect = document.getElementById('edit-select-status');
-    statusSelect.value = task.status;
-}
+  elements.editTaskTitleInput.value = task.title; // Set task title
+  elements.editTaskDescInput.value = task.description; // Set task description
+  elements.editSelectStatus.value = task.status; // Set task status
 
   // Get button elements from the task modal
-  const deleteBtn = document.getElementById('delete-task-btn');
-  const saveBtn = document.getElementById('save-task-changes-btn');
+  const deleteBtn = elements.deleteTaskBtn;
+  const saveBtn = elements.saveTaskChangesBtn;
 
   // Call saveTaskChanges upon click of Save Changes button
   saveBtn.addEventListener('click', () => {
@@ -342,9 +349,6 @@ function saveTaskChanges(taskId) {
 
 /*************************************************************************************************************************************************/
 
-document.addEventListener('DOMContentLoaded', init); // init is called after the DOM is fully loaded
-
-
 function init() {
   setupEventListeners();
   const showSidebar = localStorage.getItem('showSideBar') === 'true';
@@ -353,3 +357,5 @@ function init() {
   document.body.classList.toggle('light-theme', isLightTheme);
   fetchAndDisplayBoardsAndTasks(); // Initial display of boards and tasks
 }
+
+document.addEventListener('DOMContentLoaded', init);
